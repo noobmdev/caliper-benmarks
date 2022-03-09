@@ -10,9 +10,21 @@ test:
     type: local
     number: 1
   rounds:
-    - label: 200 txns with 10-100tps
+    - label: 4 txns with 1tps
       description: Transfering erc20 token between accounts.
-      txNumber: 200
+      txNumber: 4
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 1
+      workload:
+        module: benchmarks/scenario/simple/transfer.js
+        arguments:
+          <<: *simple-args
+          money: *money-to-transfer
+    - label: 100 txns with 10-100tps
+      description: Transfering erc20 token between accounts.
+      txNumber: 100
       rateControl:
         type: linear-rate
         opts:
@@ -21,17 +33,31 @@ test:
       workload:
         module: benchmarks/scenario/simple/transfer.js
         arguments:
-          << : *simple-args
+          <<: *simple-args
           money: *money-to-transfer
-    - label: 4 txns with 1tps
+    - label: 300 txns with 100-300tps
       description: Transfering erc20 token between accounts.
-      txNumber: 1
+      txNumber: 500
       rateControl:
-        type: fixed-rate
+        type: linear-rate
         opts:
-          tps: 1
+          startingTps: 100
+          finishingTps: 300
       workload:
         module: benchmarks/scenario/simple/transfer.js
         arguments:
-          << : *simple-args
+          <<: *simple-args
+          money: *money-to-transfer
+    - label: 1000 txns with 200-500tps
+      description: Transfering erc20 token between accounts.
+      txNumber: 1000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 200
+          finishingTps: 500
+      workload:
+        module: benchmarks/scenario/simple/transfer.js
+        arguments:
+          <<: *simple-args
           money: *money-to-transfer
