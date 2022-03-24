@@ -61,3 +61,16 @@ test:
         arguments:
           <<: *simple-args
           money: *money-to-transfer
+    - label: 2000 txns with 100-500tps
+      description: Transfering erc20 token between accounts.
+      txNumber: 2000
+      rateControl:
+        type: linear-rate
+        opts:
+          startingTps: 100
+          finishingTps: 500
+      workload:
+        module: benchmarks/scenario/simple/transfer.js
+        arguments:
+          <<: *simple-args
+          money: *money-to-transfer

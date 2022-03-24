@@ -14,7 +14,7 @@
         "address": "0x85a668dd0F2d1859777e84df885bfD1Bb87ec19A",
         "estimateGas": true,
         "gas": {
-          "transfer": 3000000
+          "transfer": 30000000
         },
         "abi": [
           {
